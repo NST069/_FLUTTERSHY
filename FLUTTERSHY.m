@@ -22,7 +22,7 @@ function varargout = FLUTTERSHY(varargin)
 
 % Edit the above text to modify the response to help FLUTTERSHY
 
-% Last Modified by GUIDE v2.5 22-Mar-2018 02:50:38
+% Last Modified by GUIDE v2.5 22-Mar-2018 04:51:15
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -165,15 +165,15 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+% --- Executes on button press in submit.
+function submit_Callback(hObject, eventdata, handles)
+% hObject    handle to submit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-m=str2num(char(get(handles.edit_m,'String')));
-J=str2num(char(get(handles.edit_j,'String')));
-Y1=str2num(char(get(handles.edit_y1,'String')));
-Y3=str2num(char(get(handles.edit_y3,'String')));
+m=str2double(char(get(handles.edit_m,'String')));
+J=str2double(char(get(handles.edit_j,'String')));
+Y1=str2double(char(get(handles.edit_y1,'String')));
+Y3=str2double(char(get(handles.edit_y3,'String')));
 f=FLTTR(m,J,Y3,Y1);
 
 figure;
