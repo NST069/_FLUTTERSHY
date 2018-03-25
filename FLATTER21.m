@@ -1,4 +1,4 @@
-function dydt =FLATTER21(T,Y,alfa10)
+function dydt =FLATTER21(T,Y,m,J)
 global   s p alfa   nap m   V k c  r  J nn;
 % функци€, вычисл€юща€ правые части уравнений 
 dydt=zeros(4,1); % a column vector;
@@ -23,54 +23,3 @@ dydt(2)=(nap*(-sa*VA*r*cos(Y(3))-pa*VA*(r*Y(4)*sin(Y(3))+V))-k*Y(1))/m;
 dydt(3)=Y(4);
 dydt(4)=(nap*(VA2*(-sa*cos(alfa10)+pa*sin(alfa10)))-c*Y(3))/J;
 %plot(T,alfa10,'.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,9 +1,9 @@
 function flttr=FLTTR(m,J,Y3,Y1)
 
-% Program Integrating Equations of self-oscillations of a plate
+% Программа интегрирующая уравнения автоколебаний пластинки  
 format long
-% Consts
-global alfa  e V alfa10  s p nap k c r nn;
+% Ввод констант 
+global alfa  e V alfa10  s p  nap m   k c  J r nn;
 splast=0.32;
 a2=splast/8;
 a=sqrt(a2);
@@ -22,14 +22,43 @@ s=[1.4 1.38 1.35 1.3 1.25 1.17 1.09 0.99 0.89 0.79 0.71 0.61 0.5 0.4 0.28 0.2 0.
 p=[0 -0.17 -0.28 -0.4 -0.5 -0.6 -0.65 -0.72 -0.77 -0.81 -0.87 -0.9 -0.87 -0.79 -0.73 -0.75 -0.78 -0.4 0 0.4 0.78 0.75 0.73 0.79 0.87 0.9 0.87 0.81 0.77 0.72 0.65 0.6 0.5 0.4 0.28 0.17 0]; 
 e=[0. 0.01 0.02 0.03 0.04  0.05 0.07 0.08 0.1 0.11 0.12 0.125 0.13 0.14 0.155 0.175 0.23 0.29 0.3 0.29 0.23 0.175 0.155 0.14 0.13 0.125 0.12 0.11 0.10 0.08 0.07 0.05 0.040 0.03 0.02 0.01 0.];
 e=e/b;
+% x1=0:0.1:2;
+% x2=0:0.1:2;
+% plot(x1,x2,'W'),grid on
+% hold on
+% xlabel('m')
+% ylabel('J')
+% params=ginput;
+% m=params(:,1);
+% J=params(:,2);
+% описание переменных
 hh=(pi*5)/180;
 alfa=-0.5*pi:(pi*5)/180:0.5*pi;
 s0=nap*s(19);
 p1=nap*(p(19)-p(18))/hh;
 L0=nap*e(19);
+%m=0.1:0.1:1.5
+%J=0.1:0.1:1.5  
+% x1=-2:0.1:2;
+% x2=-2:0.1:2;
+% plot(x1,x2,'W'),grid on
+% hold on
+% xlabel('TETA')
+% ylabel('Y')
+% params=ginput;
+% Y3=params(:,1);
+% Y1=params(:,2);
 Y=[Y1  0  Y3  0];
-% Integration Of A System Of Differential Equations
-Tspan=[0 150];%auto-step
+% интегрирование системы дифференциальных уравнений
+%Tspan=0:0.05:10;%постоянный шаг интегрирования
+Tspan=[0 150];%автоматический выбор шага
 [T,Y]=ode45(@FLATTER21,Tspan,Y);
+%вывод фазовых зависимостей и траекторий
+% plot(Y(:,3),Y(:,1),'.-')
+% grid on
+% xlabel('teta')
+% ylabel('Y')
+% title('РЕШЕНИЯ ЗАДАЧИ О КОЛЕБАНИЯХ ПЛАСТИНКИ')
+
 flttr=Y;
 end

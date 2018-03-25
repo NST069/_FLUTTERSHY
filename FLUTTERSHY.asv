@@ -24,8 +24,6 @@ function varargout = FLUTTERSHY(varargin)
 
 % Last Modified by GUIDE v2.5 25-Mar-2018 19:04:35
 
-
-
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
 gui_State = struct('gui_Name',       mfilename, ...
@@ -45,8 +43,12 @@ else
 end
 % End initialization code - DO NOT EDIT
 
+global Y3 Y1 m J;
 
-
+m=0;
+J=0;
+Y3=0;
+Y1=0;
 
 % --- Executes just before FLUTTERSHY is made visible.
 function FLUTTERSHY_OpeningFcn(hObject, eventdata, handles, varargin)
@@ -85,8 +87,7 @@ function edit_m_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_m as text
 %        str2double(get(hObject,'String')) returns contents of edit_m as a double
-%global args;
-%args.m=str2double(char(get(handles.edit_m,'String')));
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -110,8 +111,7 @@ function edit_j_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit_j as text
 %        str2double(get(hObject,'String')) returns contents of edit_j as a double
-%global args;
-%args.J=str2double(char(get(handles.edit_j,'String')));
+
 
 % --- Executes during object creation, after setting all properties.
 function edit_j_CreateFcn(hObject, eventdata, handles)
@@ -132,6 +132,8 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
+%m=strtonum()
+
 
 function tetay_Callback(hObject, eventdata, handles)
 % hObject    handle to tetay (see GCBO)
@@ -142,6 +144,8 @@ function tetay_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of tetay as a double
 
 ic=setInitCond();
+Y3=ic(1);
+Y1=ic(2);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -162,19 +166,5 @@ function submit_Callback(hObject, eventdata, handles)
 % hObject    handle to submit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%global args;
-m=str2double(char(get(handles.edit_m,'String')));
-J=str2double(char(get(handles.edit_j,'String')));
-[Y3, Y1]=setInitCond();
-%Y3=.51;
-%Y1=.23;
-%msgbox(sprintf('%d , %d , %d , %d', args.m,args.J,args.Y3,args.Y1));
-f=FLTTR(m,J,Y3,Y1);
-%f=FLTTR(args);
 
-figure;
-plot(f(:,3),f(:,1),'.-')
-grid on
-xlabel('teta')
-ylabel('Y')
-title('–≈ÿ≈Õ»ﬂ «¿ƒ¿◊» Œ  ŒÀ≈¡¿Õ»ﬂ’ œÀ¿—“»Õ »');
+msgbox(sprintf('%d , %d', Y3, Y1));
