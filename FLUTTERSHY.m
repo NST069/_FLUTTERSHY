@@ -22,7 +22,7 @@ function varargout = FLUTTERSHY(varargin)
 
 % Edit the above text to modify the response to help FLUTTERSHY
 
-% Last Modified by GUIDE v2.5 25-Mar-2018 19:04:35
+% Last Modified by GUIDE v2.5 20-Apr-2018 14:41:41
 
 
 
@@ -125,38 +125,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
-% --- Executes on button press in tetay.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to tetay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-
-function tetay_Callback(hObject, eventdata, handles)
-% hObject    handle to tetay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of tetay as text
-%        str2double(get(hObject,'String')) returns contents of tetay as a double
-
-ic=setInitCond();
-
-
-% --- Executes during object creation, after setting all properties.
-function tetay_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to tetay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on button press in submit.
 function submit_Callback(hObject, eventdata, handles)
 % hObject    handle to submit (see GCBO)
@@ -166,15 +134,54 @@ function submit_Callback(hObject, eventdata, handles)
 m=str2double(char(get(handles.edit_m,'String')));
 J=str2double(char(get(handles.edit_j,'String')));
 [Y3, Y1]=setInitCond();
+L=handles.popupmenu1.Value;
 %Y3=.51;
 %Y1=.23;
-%msgbox(sprintf('%d , %d , %d , %d', args.m,args.J,args.Y3,args.Y1));
-f=FLTTR(m,J,Y3,Y1);
+%msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
+f=FLTTR(m,J,Y3,Y1, L);
 %f=FLTTR(args);
 
-figure;
+%figure;
+result.visible=true;
 plot(f(:,3),f(:,1),'.-')
 grid on
 xlabel('teta')
 ylabel('Y')
 title('–≈ÿ≈Õ»ﬂ «¿ƒ¿◊» Œ  ŒÀ≈¡¿Õ»ﬂ’ œÀ¿—“»Õ »');
+
+
+% --- Executes on selection change in popupmenu1.
+function popupmenu1_Callback(hObject, eventdata, handles)
+% hObject    handle to popupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+
+    contents = get(hObject,'Value');
+    switch contents
+      case 1
+        L=5;
+      case 2
+        L=8;
+      case 3
+      	L=10.5;
+        msgbox('hehe');
+      case 4
+        L=12;
+        otherwise L=8;
+    end
+
+
+% --- Executes during object creation, after setting all properties.
+function popupmenu1_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to popupmenu1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+    if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+        set(hObject,'BackgroundColor','white');
+    end

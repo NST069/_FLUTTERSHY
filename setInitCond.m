@@ -1,6 +1,6 @@
 function [y3,y1] = setInitCond()
 %SETINITCOND Summary of this function goes here
-%   Detailed explanation goes here
+%   setting initial conditions
 
 figure;
 plot(-2:0.1:2,-2:0.1:2,'W'),grid on
