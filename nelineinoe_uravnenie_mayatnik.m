@@ -13,13 +13,12 @@ e=e/r
 e=0.5*r0*splast*e
 teta=pi/4
 %-sin(teta)
-subplot(2,1,1)
+%subplot(2,1,1)
 %handles=guidata(FLUTTERSHY);
 %linkdata(handles.afun2d)
-
 for v=0.5:0.5:2
- for omega=0.5:0.5:2  
-global alfa e v teta omega L
+ for omega=0.5:0.5:2
+global alfa e teta %v omega L
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -34,7 +33,7 @@ xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
 %linkdata(handles.afun2d)
-y1 =ginput
+y1 =ginput(1)
 x=fsolve(@myfyn18,y1 ,optimset('Display','off'))
 hold off
 subplot(2,1,1)
@@ -52,7 +51,9 @@ xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,2)
 %linkdata(handles.omegavalpha3d)
-title('ÇÀÂÈÑÈÌÎÑÒÜ ÓÃËÀ ÀÒÀÊÈ ÎÒ ÔÀÇÎÂÛÕ ÏÅĞÅÌÅÍÍÛÕ')
+%title('ÇÀÂÈÑÈÌÎÑÒÜ ÓÃËÀ ÀÒÀÊÈ ÎÒ ÔÀÇÎÂÛÕ ÏÅĞÅÌÅÍÍÛÕ')
+s=sprintf('Dependency Of Attack Angle\nFrom Phasal Variables');
+title(s)
 xlabel('OMEGA')
 ylabel('V')
 zlabel('ALFA')

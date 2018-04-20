@@ -22,7 +22,7 @@ function varargout = FLUTTERSHY(varargin)
 
 % Edit the above text to modify the response to help FLUTTERSHY
 
-% Last Modified by GUIDE v2.5 20-Apr-2018 17:09:51
+% Last Modified by GUIDE v2.5 20-Apr-2018 21:05:38
 
 
 
@@ -131,10 +131,11 @@ function submit_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 %global args;
+result.Visible='off';
 m=str2double(char(get(handles.edit_m,'String')));
 J=str2double(char(get(handles.edit_j,'String')));
 [Y3, Y1]=setInitCond();
-L=handles.popupmenu1.Value;
+L=handles.length_picker.Value;
 %Y3=.51;
 %Y1=.23;
 %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
@@ -142,23 +143,23 @@ f=FLTTR(m,J,Y3,Y1, L);
 %f=FLTTR(args);
 
 %figure;
-result.visible=true;
+result.Visible='on';
 axes(handles.result)
 plot(f(:,3),f(:,1),'.-')
 grid on
 xlabel('teta')
 ylabel('Y')
-title('–≈ÿ≈Õ»ﬂ «¿ƒ¿◊» Œ  ŒÀ≈¡¿Õ»ﬂ’ œÀ¿—“»Õ »');
+title('Solution Of The Plate Oscillation Problem');
 
 
-% --- Executes on selection change in popupmenu1.
-function popupmenu1_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+% --- Executes on selection change in length_picker.
+function length_picker_Callback(hObject, eventdata, handles)
+% hObject    handle to length_picker (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
+% Hints: contents = cellstr(get(hObject,'String')) returns length_picker contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from length_picker
 
     contents = get(hObject,'Value');
     switch contents
@@ -175,8 +176,8 @@ function popupmenu1_Callback(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
+function length_picker_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to length_picker (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -185,7 +186,9 @@ function popupmenu1_CreateFcn(hObject, eventdata, handles)
     if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
         set(hObject,'BackgroundColor','white');
     end
-
+    lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
+    hObject.String = lpckr;
+    
 
 % --- Executes on selection change in programSelector.
 function programSelector_Callback(hObject, eventdata, handles)
