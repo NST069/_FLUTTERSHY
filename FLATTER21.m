@@ -1,5 +1,5 @@
 function dydt =FLATTER21(T,Y,m,J)
-global   s p alfa   nap m   V k c  r  J nn;
+global   s p alfa   nap m J  V k c  r  nn;
 % функци€, вычисл€юща€ правые части уравнений 
 dydt=zeros(4,1); % a column vector;
 %tgalfa10=(cos(Y(3)))/(r*Y(4)+V*sin(Y(3)));

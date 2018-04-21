@@ -22,7 +22,7 @@ function varargout = FLUTTERSHY(varargin)
 
 % Edit the above text to modify the response to help FLUTTERSHY
 
-% Last Modified by GUIDE v2.5 20-Apr-2018 21:05:38
+% Last Modified by GUIDE v2.5 21-Apr-2018 12:50:22
 
 
 
@@ -47,7 +47,6 @@ end
 
 
 
-
 % --- Executes just before FLUTTERSHY is made visible.
 function FLUTTERSHY_OpeningFcn(hObject, eventdata, handles, varargin)
 % This function has no output args, see OutputFcn.
@@ -55,6 +54,12 @@ function FLUTTERSHY_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to FLUTTERSHY (see VARARGIN)
+
+
+% feq4p =figure('Visible', 'off', 'Position', [360,500,450,285]);%,'Title', 'Non-Linear Equation For Pendulum');
+%     test1=axes(feq4p, 'Position', [25,272,364,204]);
+%     test2=axes(feq4p, 'Position', [25,29,364,231]);
+%     
 
 % Choose default command line output for FLUTTERSHY
 handles.output = hObject;
@@ -77,155 +82,19 @@ function varargout = FLUTTERSHY_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-
-function edit_m_Callback(hObject, eventdata, handles)
-% hObject    handle to edit_m (see GCBO)
+% --- Executes on button press in pop.
+function pop_Callback(hObject, eventdata, handles)
+% hObject    handle to pop (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of edit_m as text
-%        str2double(get(hObject,'String')) returns contents of edit_m as a double
-%global args;
-%args.m=str2double(char(get(handles.edit_m,'String')));
+fpop();
 
 
-% --- Executes during object creation, after setting all properties.
-function edit_m_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit_m (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function edit_j_Callback(hObject, eventdata, handles)
-% hObject    handle to edit_j (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit_j as text
-%        str2double(get(hObject,'String')) returns contents of edit_j as a double
-%global args;
-%args.J=str2double(char(get(handles.edit_j,'String')));
-
-% --- Executes during object creation, after setting all properties.
-function edit_j_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit_j (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-% --- Executes on button press in submit.
-function submit_Callback(hObject, eventdata, handles)
-% hObject    handle to submit (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-%global args;
-result.Visible='off';
-m=str2double(char(get(handles.edit_m,'String')));
-J=str2double(char(get(handles.edit_j,'String')));
-[Y3, Y1]=setInitCond();
-L=handles.length_picker.Value;
-%Y3=.51;
-%Y1=.23;
-%msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
-f=FLTTR(m,J,Y3,Y1, L);
-%f=FLTTR(args);
-
-%figure;
-result.Visible='on';
-axes(handles.result)
-plot(f(:,3),f(:,1),'.-')
-grid on
-xlabel('teta')
-ylabel('Y')
-title('Solution Of The Plate Oscillation Problem');
-
-
-% --- Executes on selection change in length_picker.
-function length_picker_Callback(hObject, eventdata, handles)
-% hObject    handle to length_picker (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns length_picker contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from length_picker
-
-    contents = get(hObject,'Value');
-    switch contents
-      case 1
-        L=5;
-      case 2
-        L=8;
-      case 3
-      	L=10.5;
-      case 4
-        L=12;
-        otherwise
-    end
-
-
-% --- Executes during object creation, after setting all properties.
-function length_picker_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to length_picker (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-    if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-        set(hObject,'BackgroundColor','white');
-    end
-    lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
-    hObject.String = lpckr;
-    
-
-% --- Executes on selection change in programSelector.
-function programSelector_Callback(hObject, eventdata, handles)
-% hObject    handle to programSelector (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: contents = cellstr(get(hObject,'String')) returns programSelector contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from programSelector
-
-    contents = get(hObject,'Value');
-    switch contents
-      case 1
-        set(handles.pop, 'Visible', 'on');
-        set(handles.eq4p, 'Visible', 'off');
-      case 2
-        set(handles.pop, 'Visible', 'off');
-        set(handles.eq4p, 'Visible', 'on');
-        f=nelineinoe_uravnenie_mayatnik();
-        otherwise
-    end
-
-% --- Executes during object creation, after setting all properties.
-function programSelector_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to programSelector (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-% --- Executes during object creation, after setting all properties.
-function eq4p_CreateFcn(hObject, eventdata, handles)
+% --- Executes on button press in eq4p.
+function eq4p_Callback(hObject, eventdata, handles)
 % hObject    handle to eq4p (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
+% handles    structure with handles and user data (see GUIDATA)
+
+%feq4p();
