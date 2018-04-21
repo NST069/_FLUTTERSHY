@@ -22,6 +22,17 @@ function fpop
 
     f.Visible='on';
 
+    try
+        % R2010a and newer
+        iconsClassName = 'com.mathworks.widgets.BusyAffordance$AffordanceSize';
+        iconsSizeEnums = javaMethod('values',iconsClassName);
+        jObj = com.mathworks.widgets.BusyAffordance(iconsSizeEnums(2), 'calculating...');  % icon, label
+    catch
+        % R2009b and earlier
+        redColor   = java.awt.Color(1,0,0);
+        blackColor = java.awt.Color(0,0,0);
+        jObj = com.mathworks.widgets.BusyAffordance(redColor, blackColor);
+    end
 
     % --- Executes on button press in submit.
     function submit_Callback(hObject, eventdata)
@@ -29,9 +40,13 @@ function fpop
     % eventdata  reserved - to be defined in a future version of MATLAB
     % handles    structure with handles and user data (see GUIDATA)
     %global args;
+    
     axes(result) 
     cla reset;
     result.Visible='off';
+    
+    jc = javacomponent(jObj.getComponent, [10,10,80,80], gcf);
+    
     mm=str2double(get(edit_m,'String'));
     JJ=str2double(get(edit_j,'String'));
     if(mm==0 || isnan(mm)) m=5; edit_m.String=m; else m=mm; end
@@ -49,9 +64,14 @@ function fpop
           case 4
             L=12.0;
     end
-    %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
+    
+    
+    jObj.start;
     flttr=FLTTR(m,J,Y3,Y1, L, step);
-
+    jObj.stop;
+    
+    delete(jc);
+    
     result.Visible='on';
     axes(result)
     plot(flttr(:,3),flttr(:,1),'.-')
