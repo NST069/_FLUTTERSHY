@@ -18,7 +18,7 @@ teta=pi/4
 %linkdata(handles.afun2d)
 for v=0.5:0.5:2
  for omega=0.5:0.5:2
-global alfa e teta v omega L
+global alfa e teta %v omega L
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
