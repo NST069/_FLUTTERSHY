@@ -4,8 +4,8 @@ function fpop
     f = figure('Visible', 'off', 'rend','painters','pos',[500 80 500 350],'Name', 'Plate Oscillation Problem');
             edit_m = uicontrol('Style', 'edit', 'String', '5', 'Position', [345,220,70,25]);
             edit_j = uicontrol('Style', 'edit', 'String', '5', 'Position', [425,220,70,25]);
-            mm = uicontrol('Style', 'text', 'String', 'M', 'Position', [345,190,70,25]);
-            jj = uicontrol('Style', 'text', 'String', 'J', 'Position', [425,190,70,25]);
+            mstr = uicontrol('Style', 'text', 'String', 'M', 'Position', [345,190,70,25]);
+            jstr = uicontrol('Style', 'text', 'String', 'J', 'Position', [425,190,70,25]);
             tspan_selector = uicontrol('Style', 'slider', 'Min', 100, 'Max', 1100, 'Callback', @slider_value, 'SliderStep', [.1 .1], 'Value', 100, 'Position', [345,310,120,25]);
             tspan_value = uicontrol('Style', 'text', 'String', tspan_selector.Value, 'Position', [470,310,30,25]);
             lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
@@ -32,8 +32,10 @@ function fpop
     axes(result) 
     cla reset;
     result.Visible='off';
-    m=str2double(get(edit_m,'String'));
-    J=str2double(get(edit_j,'String'));
+    mm=str2double(get(edit_m,'String'));
+    JJ=str2double(get(edit_j,'String'));
+    if(mm==0 || isnan(mm)) m=5; edit_m.String=m; else m=mm; end
+    if(JJ==0 || isnan(JJ)) J=5; edit_J.String=J; else J=JJ; end
     [Y3, Y1]=setInitCond();
     %L=length_picker.String;
     step = round(tspan_selector.Value);
