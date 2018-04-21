@@ -13,7 +13,7 @@ e=e/r
 e=0.5*r0*splast*e
 teta=pi/4
 %-sin(teta)
-subplot(2,1,1)
+%subplot(2,1,1)
 for v=0.5:0.5:2
  for omega=0.5:0.5:2  
 global alfa e teta %v omega L
@@ -21,22 +21,31 @@ alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
 subplot(2,1,1)
-plot(alfa3,e4,'B'),grid on
+p1 = plot(alfa3,e4,'B'),grid on
 hold on
 axis ([-pi/2  pi/2  -10  10])
 y = (omega+sin(teta)+v*cos(teta)).*tan(alfa3)
-plot(alfa3,y,'R'),grid on
+p2 = plot(alfa3,y,'R'),grid on
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
-y1 =ginput(1)
-x=fsolve(@myfyn18,y1 ,optimset('Display','off'))
+ii=find((p1.YData-p2.YData)<=0.1, 1);
+i=-pi/2+pi/100;
+for j=1:1:ii+1 
+    i=i+(0.01*pi/180);
+end
+y1=[i,0];
+hold on
+plot(y1(1),y1(2),'X');
+%y1 =ginput(1)
+x=fsolve(@myfyn18,y1 ,optimset('Display','off'));
 hold off
-subplot(2,1,1)
-plot(x(1),x(2),'X'),grid on
+%subplot(2,1,1)
+%plot(x(1),x(2),'X'),grid on
 subplot(2,1,2)
 hold on
 plot3(omega,v,x(1),'*'),grid on
+pause(.1);
  end
 end
 subplot(2,1,1)
