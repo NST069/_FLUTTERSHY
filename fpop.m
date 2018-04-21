@@ -6,9 +6,11 @@ function fpop
             edit_j = uicontrol('Style', 'edit', 'String', '5', 'Position', [425,220,70,25]);
             mm = uicontrol('Style', 'text', 'String', 'M', 'Position', [345,190,70,25]);
             jj = uicontrol('Style', 'text', 'String', 'J', 'Position', [425,190,70,25]);
+            tspan_selector = uicontrol('Style', 'slider', 'Min', 100, 'Max', 1100, 'Callback', @slider_value, 'SliderStep', [.1 .1], 'Value', 100, 'Position', [345,310,120,25]);
+            tspan_value = uicontrol('Style', 'text', 'String', tspan_selector.Value, 'Position', [470,310,30,25]);
             lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
             length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Callback', @length_picker_Callback, 'Position', [345,250,150,25]);
-            llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,25]);
+            llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
             result = axes('Units', 'Pixels', 'Position', [30,30,300,300])
                 grid on
@@ -34,7 +36,7 @@ function fpop
     J=str2double(get(edit_j,'String'));
     [Y3, Y1]=setInitCond();
     %L=length_picker.String;
-    L=0;
+    step = round(tspan_selector.Value);
     switch length_picker.Value
           case 1
             L=5.0;
@@ -46,7 +48,7 @@ function fpop
             L=12.0;
     end
     %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
-    f=FLTTR(m,J,Y3,Y1, L);
+    f=FLTTR(m,J,Y3,Y1, L, step);
 
     result.Visible='on';
     axes(result)
@@ -55,6 +57,11 @@ function fpop
     xlabel('teta')
     ylabel('Y')
     title('Solution Of The Plate Oscillation Problem');
+    end
+
+    function slider_value(hObject,eventdata)
+    val = tspan_selector.Value;
+    tspan_value.String=num2str(round(val));
     end
 
     % --- Executes on selection change in length_picker.

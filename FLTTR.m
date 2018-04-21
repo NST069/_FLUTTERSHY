@@ -1,6 +1,6 @@
-function flttr=FLTTR(mm,JJ,Y3,Y1,L)
+function flttr=FLTTR(mm,JJ,Y3,Y1,L, tspan)
 
-% Программа интегрирующая уравнения автоколебаний пластинки  
+%Program Integrating Plate Autooscillation Equations
 format long
 % Ввод констант 
 global alfa  e V alfa10 m J s p  nap   k c r nn;
@@ -68,7 +68,7 @@ L0=nap*e(19);
 Y=[Y1  0  Y3  0];
 % интегрирование системы дифференциальных уравнений
 %Tspan=0:0.05:10;%постоянный шаг интегрирования
-Tspan=[0 150];%автоматический выбор шага
+Tspan=[0 tspan];%автоматический выбор шага
 [T,Y]=ode45(@FLATTER21,Tspan,Y);
 %вывод фазовых зависимостей и траекторий
 % plot(Y(:,3),Y(:,1),'.-')

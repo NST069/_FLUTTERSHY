@@ -1,4 +1,4 @@
-function num = nleq4p() %non-linear equation for pendulum
+function nleq4p() %non-linear equation for pendulum
 
 splast=1
 a2=splast/8
@@ -14,8 +14,6 @@ e=0.5*r0*splast*e
 teta=pi/4
 %-sin(teta)
 %subplot(2,1,1)
-%handles=guidata(FLUTTERSHY);
-%linkdata(handles.afun2d)
 for v=0.5:0.5:2
  for omega=0.5:0.5:2
 global alfa e teta v omega L
@@ -23,7 +21,6 @@ alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
 subplot(2,1,1)
-%linkdata(handles.afun2d)
 plot(alfa3,e4,'B'),grid on
 hold on
 axis ([-pi/2  pi/2  -10  10])
@@ -32,33 +29,25 @@ plot(alfa3,y,'R'),grid on
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
-%linkdata(handles.afun2d)
 y1 =ginput(1)
 x=fsolve(@myfyn18,y1 ,optimset('Display','off'))
 hold off
 subplot(2,1,1)
-%linkdata(handles.afun2d)
 plot(x(1),x(2),'X'),grid on
 subplot(2,1,2)
-%linkdata(handles.omegavalpha3d)
 hold on
 plot3(omega,v,x(1),'*'),grid on
  end
 end
 subplot(2,1,1)
-%linkdata(handles.afun2d)
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,2)
-%linkdata(handles.omegavalpha3d)
-%title('«¿¬»—»ÃŒ—“‹ ”√À¿ ¿“¿ » Œ“ ‘¿«Œ¬€’ œ≈–≈Ã≈ÕÕ€’')
 s=sprintf('Dependency Of Attack Angle\nFrom Phasal Variables');
 title(s)
 xlabel('OMEGA')
 ylabel('V')
 zlabel('ALFA')
-
-num=0;
 
 end
 
