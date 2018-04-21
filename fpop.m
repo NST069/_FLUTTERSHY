@@ -1,7 +1,7 @@
 function fpop
-%UNTITLED Summary of this function goes here
+%FPOP Summary of this function goes here
 %   Detailed explanation goes here
-    f = figure('Visible', 'off');%, 'Title', 'Plate Oscillation Problem');
+    f = figure('Visible', 'off', 'rend','painters','pos',[500 80 500 350],'Name', 'Plate Oscillation Problem');
             edit_m = uicontrol('Style', 'edit', 'String', '5', 'Position', [345,220,70,25]);
             edit_j = uicontrol('Style', 'edit', 'String', '5', 'Position', [425,220,70,25]);
             mm = uicontrol('Style', 'text', 'String', 'M', 'Position', [345,190,70,25]);
