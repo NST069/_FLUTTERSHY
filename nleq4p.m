@@ -1,4 +1,4 @@
-function nleq4p() %non-linear equation for pendulum
+function nleq4p(ismanual) %non-linear equation for pendulum
 
 splast=1
 a2=splast/8
@@ -12,11 +12,13 @@ e=[0. 0.01 0.02 0.03 0.04  0.05 0.07 0.08 0.1 0.11 0.12 0.125 0.13 0.14 0.155 0.
 e=e/r
 e=0.5*r0*splast*e
 teta=pi/4
-%-sin(teta)
-subplot(2,1,1)
-for v=0.5:0.5:2
- for omega=0.5:0.5:2  
-global alfa e teta %v omega L
+%-sin(teta) 
+%subplot(2,1,1)
+for vv=0.5:0.5:2
+ for oomega=0.5:0.5:2  
+global alfa e teta v omega L
+v=vv;
+omega=oomega;
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -29,7 +31,12 @@ plot(alfa3,y,'R'),grid on
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
-y1 =ginput(1)
+if(ismanual==1)
+    y1 = ginput(1)
+else
+    msgbox(num2str(ismanual));
+    %place for auto-pointing
+end
 x=fsolve(@myfyn18,y1 ,optimset('Display','off'))
 hold off
 subplot(2,1,1)
