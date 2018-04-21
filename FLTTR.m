@@ -69,7 +69,7 @@ Y=[Y1  0  Y3  0];
 % интегрирование системы дифференциальных уравнений
 %Tspan=0:0.05:10;%постоянный шаг интегрирования
 Tspan=[0 tspan];%автоматический выбор шага
-[T,Y]=ode45(@FLATTER21,Tspan,Y);
+[T,Y]=ode45(@FLATTER21,Tspan,Y, odeset('OutputFcn',@stat));
 %вывод фазовых зависимостей и траекторий
 % plot(Y(:,3),Y(:,1),'.-')
 % grid on
@@ -78,4 +78,24 @@ Tspan=[0 tspan];%автоматический выбор шага
 % title('РЕШЕНИЯ ЗАДАЧИ О КОЛЕБАНИЯХ ПЛАСТИНКИ')
 
 flttr=Y;
+end
+
+function status = stat(t,y,flag)
+    global tt yy
+    if nargin < 3 || isempty(flag)
+        tt = [tt t];
+        yy = [yy y];
+    else
+        switch(flag)
+        case 'init'
+            fprintf('start\n');
+            tt = t(1);
+            yy = y;
+        case 'done'
+            fprintf('done\n');
+        
+        end
+    end
+    disp(yy);
+    status = 0;
 end

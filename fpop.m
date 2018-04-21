@@ -35,7 +35,7 @@ function fpop
     mm=str2double(get(edit_m,'String'));
     JJ=str2double(get(edit_j,'String'));
     if(mm==0 || isnan(mm)) m=5; edit_m.String=m; else m=mm; end
-    if(JJ==0 || isnan(JJ)) J=5; edit_J.String=J; else J=JJ; end
+    if(JJ==0 || isnan(JJ)) J=5; edit_j.String=J; else J=JJ; end
     [Y3, Y1]=setInitCond();
     %L=length_picker.String;
     step = round(tspan_selector.Value);
@@ -50,11 +50,11 @@ function fpop
             L=12.0;
     end
     %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
-    f=FLTTR(m,J,Y3,Y1, L, step);
+    flttr=FLTTR(m,J,Y3,Y1, L, step);
 
     result.Visible='on';
     axes(result)
-    plot(f(:,3),f(:,1),'.-')
+    plot(flttr(:,3),flttr(:,1),'.-')
     grid on
     xlabel('teta')
     ylabel('Y')
