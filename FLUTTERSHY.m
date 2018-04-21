@@ -132,8 +132,10 @@ function submit_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %global args;
 result.Visible='off';
-m=str2double(get(handles.edit_m,'String'));
-J=str2double(get(handles.edit_j,'String'));
+mm=str2double(get(handles.edit_m,'String'));
+JJ=str2double(get(handles.edit_j,'String'));
+if(mm==0 || isnan(mm)) m=5; handles.edit_m.String=m; else m=mm; end
+if(JJ==0 || isnan(JJ)) J=5; handles.edit_j.String=J; else J=JJ; end
 [Y3, Y1]=setInitCond();
 %L=handles.length_picker.Value;
 switch handles.length_picker.Value
@@ -146,7 +148,7 @@ switch handles.length_picker.Value
       case 4
         L=12;
         otherwise
-    end
+end
 %Y3=.51;
 %Y1=.23;
 %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
