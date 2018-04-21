@@ -16,7 +16,7 @@ teta=pi/4
 subplot(2,1,1)
 for v=0.5:0.5:2
  for omega=0.5:0.5:2  
-global alfa e teta %v omega L
+global alfa e v teta omega L
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -29,7 +29,7 @@ plot(alfa3,y,'R'),grid on
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
-y1 =ginput(1)
+y1 =ginput()
 x=fsolve(@myfyn18,y1 ,optimset('Display','off'))
 hold off
 subplot(2,1,1)
