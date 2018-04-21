@@ -70,6 +70,7 @@ guidata(hObject, handles);
 % UIWAIT makes FLUTTERSHY wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
 
+movegui('center');
 
 % --- Outputs from this function are returned to the command line.
 function varargout = FLUTTERSHY_OutputFcn(hObject, eventdata, handles) 
