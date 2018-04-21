@@ -1,4 +1,4 @@
-function num = nelineinoe_uravnenie_mayatnik()
+function num = nleq4p() %non-linear equation for pendulum
 
 splast=1
 a2=splast/8
@@ -18,7 +18,7 @@ teta=pi/4
 %linkdata(handles.afun2d)
 for v=0.5:0.5:2
  for omega=0.5:0.5:2
-global alfa e teta%v omega L
+global alfa e teta v omega L
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -51,7 +51,7 @@ xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,2)
 %linkdata(handles.omegavalpha3d)
-%title('«¿¬»—»ÃŒ—“‹ ”√À¿ ¿“¿ » Œ“ ‘¿«Œ¬€’ œ≈–≈Ã≈ÕÕ€’')
+%title('??????????? ???? ????? ?? ??????? ??????????')
 s=sprintf('Dependency Of Attack Angle\nFrom Phasal Variables');
 title(s)
 xlabel('OMEGA')
@@ -61,11 +61,3 @@ zlabel('ALFA')
 num=0;
 
 end
-
-
-
-
-
-
- 
-

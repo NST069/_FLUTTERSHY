@@ -1,9 +1,13 @@
-function flttr=FLTTR(m,J,Y3,Y1,L)
+function flttr=FLTTR(mm,JJ,Y3,Y1,L)
 
 % Программа интегрирующая уравнения автоколебаний пластинки  
 format long
 % Ввод констант 
 global alfa  e V alfa10  s p  nap m   k c  J r nn;
+
+m=mm;
+J=JJ;
+
 splast=0.32;
 a2=splast/8;
 a=sqrt(a2);

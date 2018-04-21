@@ -132,10 +132,21 @@ function submit_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 %global args;
 result.Visible='off';
-m=str2double(char(get(handles.edit_m,'String')));
-J=str2double(char(get(handles.edit_j,'String')));
+m=str2double(get(handles.edit_m,'String'));
+J=str2double(get(handles.edit_j,'String'));
 [Y3, Y1]=setInitCond();
-L=handles.length_picker.Value;
+%L=handles.length_picker.Value;
+switch handles.length_picker.Value
+      case 1
+        L=5;
+      case 2
+        L=8;
+      case 3
+      	L=10.5;
+      case 4
+        L=12;
+        otherwise
+    end
 %Y3=.51;
 %Y1=.23;
 %msgbox(sprintf('%d , %d , %d , %d', m,J,Y3,Y1));
@@ -207,7 +218,7 @@ function programSelector_Callback(hObject, eventdata, handles)
       case 2
         set(handles.pop, 'Visible', 'off');
         set(handles.eq4p, 'Visible', 'on');
-        f=nelineinoe_uravnenie_mayatnik();
+        nleq4p();
         otherwise
     end
 
