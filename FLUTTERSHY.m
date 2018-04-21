@@ -237,6 +237,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
+
 % --- Executes during object creation, after setting all properties.
 function eq4p_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to eq4p (see GCBO)
