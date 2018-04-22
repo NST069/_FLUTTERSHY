@@ -14,9 +14,16 @@ e=0.5*r0*splast*e
 teta=pi/4
 %-sin(teta)
 %subplot(2,1,1)
-for v=0.5:0.5:2
- for omega=0.5:0.5:2  
-global alfa e teta %v omega L
+matr=zeros(4,4);
+cx = 0;
+cy=0;
+for vv=0.5:0.5:2
+    cy=cy+1;
+ for oomega=0.5:0.5:2  
+global alfa e teta v omega L
+omega=oomega;
+v=vv;
+cx=cx+1;
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -29,31 +36,42 @@ p2 = plot(alfa3,y,'R'),grid on
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,1)
-i=find((p1-y)<=0.1, 1);
+ii=find((p1.YData-p2.YData)<=0.1, 1);
+i=-pi/2+pi/100;
+for j=1:1:ii+1 
+    i=i+(0.01*pi/180);
+end
 y1=[i,0];
 hold on
 plot(y1(1),y1(2),'X');
 %y1 =ginput(1)
 x=fsolve(@myfyn18,y1 ,optimset('Display','off'));
-pause(.1);
 hold off
 %subplot(2,1,1)
 %plot(x(1),x(2),'X'),grid on
 subplot(2,1,2)
 hold on
 plot3(omega,v,x(1),'*'),grid on
-pause(.1);
+matr(cx,cy)=x(1);
+%pause(.1);
  end
+ cx=0;
 end
 subplot(2,1,1)
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,2)
+x=1:1:4;
+y=4:-1:1;
 s=sprintf('Dependency Of Attack Angle\nFrom Phasal Variables');
 title(s)
 xlabel('OMEGA')
 ylabel('V')
 zlabel('ALFA')
+% [X,Y]=meshgrid([1:1:4],[1:1:4]);
+% Z=matr(X,Y);
+% surf(X,Y,Z);
+surf(x/2,y/2,matr(x,y));
 
 end
 
