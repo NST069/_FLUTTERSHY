@@ -14,9 +14,11 @@ e=0.5*r0*splast*e
 teta=pi/4
 %-sin(teta)
 %subplot(2,1,1)
-for v=0.5:0.5:2
- for omega=0.5:0.5:2  
-global alfa e teta %v omega L
+for vv=0.5:0.5:2
+ for oomega=0.5:0.5:2  
+global alfa e teta v omega L
+omega=oomega;
+v=vv;
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
