@@ -17,7 +17,7 @@ teta=pi/4
 matr=zeros(4,4);
 cx = 0;
 cy=0;
-jobj.start();
+
 for vv=0.5:0.5:2
     cx=cx+1;
  for oomega=0.5:0.5:2  
@@ -25,6 +25,9 @@ global alfa e teta v omega L
 omega=oomega;
 v=vv;
 cy=cy+1;
+
+jobj.start();
+
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -54,11 +57,14 @@ subplot(2,1,2)
 hold on
 plot3(omega,v,x(1),'*'),grid on
 matr(cx,cy)=x(1);
+
+jobj.stop();
+
 pause(.1);
  end
  cy=0;
 end
-jobj.stop();
+
 jobj.setBusyText('Done');
 subplot(2,1,1)
 xlabel('ALFA')
@@ -74,7 +80,8 @@ zlabel('ALFA')
 % [X,Y]=meshgrid([1:1:4],[1:1:4]);
 % Z=matr(X,Y);
 % surf(X,Y,Z);
-surf(x/2,y/2,matr(x,y));
+surf(x/2,y/2,matr(x,y))
+view([-45 45]);
 
 end
 

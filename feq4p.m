@@ -28,7 +28,6 @@ function feq4p
     %global args;
     
     jc = javacomponent(jObj.getComponent, [250,220,80,55], gcf);
-    jObj.setPaintsWhenStopped(true);
     
     startbtn.Visible='off';
     
