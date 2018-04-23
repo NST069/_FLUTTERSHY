@@ -1,4 +1,4 @@
-function nleq4p() %non-linear equation for pendulum
+function nleq4p(jobj) %non-linear equation for pendulum
 
 splast=1
 a2=splast/8
@@ -17,13 +17,14 @@ teta=pi/4
 matr=zeros(4,4);
 cx = 0;
 cy=0;
+jobj.start();
 for vv=0.5:0.5:2
-    cy=cy+1;
+    cx=cx+1;
  for oomega=0.5:0.5:2  
 global alfa e teta v omega L
 omega=oomega;
 v=vv;
-cx=cx+1;
+cy=cy+1;
 alfa3=-pi/2+pi/100:0.01*pi/180:0.5*pi-pi/100
 e3=spline(alfa,e,alfa3)
 e4=omega.*e3+cos(teta)-v*sin(teta)
@@ -52,17 +53,18 @@ hold off
 subplot(2,1,2)
 hold on
 plot3(omega,v,x(1),'*'),grid on
-matr(cy,cx)=x(1);
+matr(cx,cy)=x(1);
 pause(.1);
  end
- cx=0;
+ cy=0;
 end
+jobj.stop();
+jobj.setBusyText('Done');
 subplot(2,1,1)
 xlabel('ALFA')
 ylabel('FUN')
 subplot(2,1,2)
 x=1:1:4;
-%y=4:-1:1;
 y=1:1:4;
 s=sprintf('Dependency Of Attack Angle\nFrom Phasal Variables');
 title(s)
