@@ -10,6 +10,9 @@ function fpop
             tspan_value = uicontrol('Style', 'text', 'String', tspan_selector.Value, 'Position', [470,310,30,25]);
             lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
             length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Callback', @length_picker_Callback, 'Position', [345,250,150,25]);
+            rstr = uicontrol('Style', 'text', 'String', 'r=', 'Position', [345,170,30,25]);
+            rpckr=sprintf('%f\n%f\n%f', 5, 1, .5);
+            r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Callback', @length_picker_Callback, 'Position', [380,175,110,25]);
             llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
             result = axes('Units', 'Pixels', 'Position', [30,30,300,300])
@@ -51,7 +54,6 @@ function fpop
     JJ=str2double(get(edit_j,'String'));
     if(mm==0 || isnan(mm)) m=5; edit_m.String=m; else m=mm; end
     if(JJ==0 || isnan(JJ)) J=5; edit_j.String=J; else J=JJ; end
-    [Y3, Y1]=setInitCond();
     %L=length_picker.String;
     step = round(tspan_selector.Value);
     switch length_picker.Value
@@ -64,10 +66,20 @@ function fpop
           case 4
             L=12.0;
     end
+    switch r_picker.Value
+        case 1
+            R=5;
+        case 2
+            R=1;
+        case 3
+            R=.5;
+    end
     
+    [c,V]=stability(R);
+    [Y3, Y1]=setInitCond();
     
     jObj.start;
-    flttr=FLTTR(m,J,Y3,Y1, L, step);
+    flttr=FLTTR(m,J,c,V,Y3,Y1, L, step);
     jObj.stop;
     
     delete(jc);
