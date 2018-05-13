@@ -1,10 +1,13 @@
-function [cc,VV, s] = stability(r)
+function [cc,VV, isStable] = stability(r, mm, JJ)
 
 % Программа интегрирующая уравнения автоколебаний пластинки  
 format long
 % Ввод констант 
 global alfa  e V alfa10  s p  nap m   k c  J  nn;
 figure('Visible', 'on', 'rend','painters','pos',[500 80 500 350],'Name', 'Set Initial Conditions');
+
+m=mm;
+J=JJ;
 
 splast=0.32;
 a22=splast/8;
@@ -50,6 +53,24 @@ a4=k*(V^2)*b+k*c
 A=[a1 a3 0; a0 a2 a4;0 a1 a3]
 z=det(A) 
 pretty(z)
+%aaa = evalc('pretty(z)')
+% aaa=evalc('vpa(z)')
+% aaa=aaa(11:end)
+% [mtch, rstart, rend]=regexp(aaa, 'V\^\d+', 'match', 'start', 'end');
+% for i=length(mtch):-1:1
+%     ss=cell2mat(mtch(i));
+%     sss=ss(3:end);
+%     ii=str2num(sss);
+%     ii=ii/2;
+%     ssss=sprintf('V^%s', num2str(ii));
+%     rs=rstart(i)-1;
+%     re=rend(i)+1;
+%     aaa=sprintf('%s%s%s',aaa(1:rs),ssss,aaa(re:end));
+% end
+% aaa=strrep(aaa, '*', '.*');
+% aaa=strrep(aaa, '\', '.\');
+% aaa=strrep(aaa, '^', '.^');
+% z=eval(aaa);
 hold on
 %axis ([-1  10  -1  10]);
 x=0:0.1:100;
@@ -58,17 +79,22 @@ x1=-6:0.1:3.4;
 [c, V] = meshgrid(x,y);
 vpa(z)
 switch(r)
+    case 10
+        z=23660.*V.^3 + (78728.*V.^2.*c)./5 - (24128.*V.^2)./5 + 2540.*V.*c.^2 - (7232.*V.*c)./5 + (832.*V)./5;
     case 5
-        %z=285.6.*V.^2.*c - 5372.0.*V.*c + 19.2.*V - 120.0.*V.^2 + 100.8.*V.^3
         z=(504.*V.^3)./5 + (1608.*V.^2.*c)./5 - 120.*V.^2 + 240.*V.*c.^2 - (792.*V.*c)./5 + (96.*V)./5;
-    case 1
-        %z=84.0.*V.^2.*c - 12.0.*V.*c - 6.4.*V - 88.0.*V.^2 - 280.0.*V.^3
-        z=- 280.*V.^3 + 424.*V.^2.*c - 88.*V.^2 - 160.*V.*c.^2 + (328.*V.*c)./5 - (32.*V)./5;
-    case .5
-        %z=2.8.*V.*c + 33.6*V.^2.*c - 3.84.*V - 71.04*V.^2 - 322.56.*V.^3
-        z=- (8064.*V.^3)./25 + (1968.*V^2.*c)./5 - (1776.*V.^2)./25 - 120.*V.*c.^2 + (216.*V.*c)./5 - (96.*V)./25;
+    case 2
+        z=- (2772.*V.^3)./25 + (1416.*V.^2.*c)./5 - (1536.*V.^2)./25 - 180.*V.*c.^2 + (384.*V.*c)./5 - (192.*V)./25;
+    case 0
+        z=- (1372.*V.^3)./5 + (1288.*V.^2.*c)./5 - (112.*V.^2)./5 - 60.*V.*c.^2 + (48.*V.*c)./5;
+    case -1
+        z=(9072.*V.^3)./25 - (2232.*V.^2.*c)./5 + (5112.*V.^2)./25 + 120.*V.*c.^2 - (456.*V.*c)./5 + (288.*V)./25;
+    case -2
+        z=(57596.*V.^3)./25 - (9592.*V.^2.*c)./5 + (16544.*V.^2)./25 + 380.*V.*c.^2 - (1184.*V.*c)./5 + (704.*V)./25;
+    case -6
+        z=(1101772.*V.^3)./25 - (100472.*V.^2.*c)./5 + (154432.*V.^2)./25 + 2220.*V.*c.^2 - (6336.*V.*c)./5 + (3648.*V)./25;
     otherwise
-        z=285.6.*V.^2.*c - 5372.0.*V.*c + 19.2.*V - 120.0.*V.^2 + 100.8.*V.^3
+        z=285.6.*V.^2.*c - 5372.0.*V.*c + 19.2.*V - 120.0.*V.^2 + 100.8.*V.^3;
 end
 v=[0,0];
 %axis ([-10  10  -10  10]);
@@ -95,11 +121,13 @@ a31=(VVV.^3)*b*sm+k*VVV*b*r+VVV*cc
 a41=k*((VVV)*b+cc)
 A=[a11 a31 0; a00 a21 a41;0 a11 a31]
 delta33=det(A) 
-if(a11>0 & a21>0 & a31>0 & a41>0 & delta33>0 )
-s=1;%stable
+if(a11>0 && a21>0 && a31>0 && a41>0 && delta33>0 )
+isStable=1;
 else
-s=0;%not stable
+isStable=0;
 grid on
 end
+
+disp(isStable);
 
 close gcf;

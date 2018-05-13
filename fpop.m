@@ -11,7 +11,7 @@ function fpop
             lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
             length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Position', [345,250,150,25]);
             rstr = uicontrol('Style', 'text', 'String', 'r=', 'Position', [345,170,30,25]);
-            rpckr=sprintf('%f\n%f\n%f', 5, 1, .5);
+            rpckr=sprintf('%f\n%f\n%f\n%f\n%f\n%f\n%f', 10,5,2,0,-1,-2,-6);
             r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Position', [380,175,110,25]);
             llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
@@ -69,18 +69,26 @@ function fpop
     end
     switch r_picker.Value
         case 1
-            R=5;
+            R=10;
         case 2
-            R=1;
+            R=5;
         case 3
-            R=.5;
+            R=2;
+        case 4
+            R=0;
+        case 5
+            R=-1
+        case 6
+            R=-2
+        case 7
+            R=-6
     end
     
     s=sprintf('Stability Rgn');
     jObj.setBusyText(s);
     jObj.start;
     pause(.1);
-    [c,V,isStable]=stability(R);
+    [c,V,isStable]=stability(R, m, J);
     if(isStable==1) stblty.String='Position Stable';
     else stblty.String='Position Unstable';
     end
