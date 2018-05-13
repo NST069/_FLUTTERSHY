@@ -12,9 +12,10 @@ function fpop
             length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Position', [345,250,150,25]);
             rstr = uicontrol('Style', 'text', 'String', 'r=', 'Position', [345,170,30,25]);
             rpckr=sprintf('%f\n%f\n%f', 5, 1, .5);
-            r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Callback', @length_picker_Callback, 'Position', [380,175,110,25]);
+            r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Position', [380,175,110,25]);
             llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
+            stability = uicontrol('Style', 'text', 'String', '', 'Position', [345,100,150,25]);
             result = axes('Units', 'Pixels', 'Position', [30,30,300,300])
                 grid on
                 xlabel('teta')
@@ -75,11 +76,11 @@ function fpop
             R=.5;
     end
     
-    s=sprintf('BuildStability Region...');
+    s=sprintf('Stability Rgn');
     jObj.setBusyText(s);
     jObj.start;
     pause(.1);
-    [c,V]=stability(R);
+    [c,V,isStable]=stability(R);
     jObj.stop;
     [Y3, Y1]=setInitCond();
     

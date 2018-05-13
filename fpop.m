@@ -15,6 +15,7 @@ function fpop
             r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Position', [380,175,110,25]);
             llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
+            stblty = uicontrol('Style', 'text', 'String', '', 'Position', [345,100,150,25]);
             result = axes('Units', 'Pixels', 'Position', [30,30,300,300])
                 grid on
                 xlabel('teta')
@@ -79,7 +80,10 @@ function fpop
     jObj.setBusyText(s);
     jObj.start;
     pause(.1);
-    [c,V]=stability(R);
+    [c,V,isStable]=stability(R);
+    if(isStable==1) stblty.String='Position Stable';
+    else stblty.String='Position Unstable';
+    end
     jObj.stop;
     [Y3, Y1]=setInitCond();
     
