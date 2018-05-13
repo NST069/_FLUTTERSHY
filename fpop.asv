@@ -75,7 +75,7 @@ function fpop
             R=.5;
     end
     
-    s=sprintf('Stability Rgn');
+    s=sprintf('BuildStability Region...');
     jObj.setBusyText(s);
     jObj.start;
     pause(.1);
