@@ -37,7 +37,7 @@ function feq4p
     modebtn.Visible='off';
     nleq4p(modebtn.Value, jObj);
     
-    if(jc~=null)
+    if(modebtn.Value==0)
         delete(jc);
     end
     startbtn.Visible='on';
