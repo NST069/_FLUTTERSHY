@@ -9,7 +9,10 @@ function fpop
             tspan_selector = uicontrol('Style', 'slider', 'Min', 100, 'Max', 1100, 'Callback', @slider_value, 'SliderStep', [.1 .1], 'Value', 100, 'Position', [345,310,120,25]);
             tspan_value = uicontrol('Style', 'text', 'String', tspan_selector.Value, 'Position', [470,310,30,25]);
             lpckr=sprintf('%f\n%f\n%f\n%f', 5, 8, 10.5, 12);
-            length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Callback', @length_picker_Callback, 'Position', [345,250,150,25]);
+            length_picker = uicontrol('Style', 'popupmenu', 'String', lpckr, 'Position', [345,250,150,25]);
+            rstr = uicontrol('Style', 'text', 'String', 'r=', 'Position', [345,170,30,25]);
+            rpckr=sprintf('%f\n%f\n%f', 5, 1, .5);
+            r_picker = uicontrol('Style', 'popupmenu', 'String', rpckr, 'Position', [380,175,110,25]);
             llpp = uicontrol('Style', 'text', 'String', 'Length', 'Position', [345,280,150,15]);
             submit = uicontrol('Style', 'pushbutton', 'String', 'Set Initial Conditions', 'Callback', @submit_Callback, 'Position', [345,150,150,25]);
             result = axes('Units', 'Pixels', 'Position', [30,30,300,300])
@@ -26,7 +29,7 @@ function fpop
         % R2010a and newer
         iconsClassName = 'com.mathworks.widgets.BusyAffordance$AffordanceSize';
         iconsSizeEnums = javaMethod('values',iconsClassName);
-        jObj = com.mathworks.widgets.BusyAffordance(iconsSizeEnums(2), 'calculating...');  % icon, label
+        jObj = com.mathworks.widgets.BusyAffordance(iconsSizeEnums(2), '');  % icon, label
     catch
         % R2009b and earlier
         redColor   = java.awt.Color(1,0,0);
@@ -51,7 +54,6 @@ function fpop
     JJ=str2double(get(edit_j,'String'));
     if(mm==0 || isnan(mm)) m=5; edit_m.String=m; else m=mm; end
     if(JJ==0 || isnan(JJ)) J=5; edit_j.String=J; else J=JJ; end
-    [Y3, Y1]=setInitCond();
     %L=length_picker.String;
     step = round(tspan_selector.Value);
     switch length_picker.Value
@@ -64,10 +66,26 @@ function fpop
           case 4
             L=12.0;
     end
+    switch r_picker.Value
+        case 1
+            R=5;
+        case 2
+            R=1;
+        case 3
+            R=.5;
+    end
     
+    s=sprintf('Stability Rgn');
+    jObj.setBusyText(s);
+    jObj.start;
+    pause(.1);
+    [c,V]=stability(R);
+    jObj.stop;
+    [Y3, Y1]=setInitCond();
     
     jObj.start;
-    flttr=FLTTR(m,J,Y3,Y1, L, step);
+    jObj.setBusyText('calculating...');
+    flttr=FLTTR(m,J,c,V,Y3,Y1, L, step);
     jObj.stop;
     
     delete(jc);
@@ -82,31 +100,8 @@ function fpop
     end
 
     function slider_value(hObject,eventdata)
-    val = tspan_selector.Value;
-    tspan_value.String=num2str(round(val));
-    end
-
-    % --- Executes on selection change in length_picker.
-    function length_picker_Callback(hObject, eventdata)
-    % hObject    handle to length_picker (see GCBO)
-    % eventdata  reserved - to be defined in a future version of MATLAB
-    % handles    structure with handles and user data (see GUIDATA)
-
-    % Hints: contents = cellstr(get(hObject,'String')) returns length_picker contents as cell array
-    %        contents{get(hObject,'Value')} returns selected item from length_picker
-
-        contents = get(hObject,'Value');
-        switch contents
-          case 1
-            L=5;
-          case 2
-            L=8;
-          case 3
-            L=10.5;
-          case 4
-            L=12;
-            otherwise
-        end 
+        val = tspan_selector.Value;
+        tspan_value.String=num2str(round(val));
     end
 end
 

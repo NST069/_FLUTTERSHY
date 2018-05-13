@@ -1,4 +1,4 @@
-function flttr=FLTTR(mm,JJ,Y3,Y1,L, tspan)
+function flttr=FLTTR(mm,JJ,cc,VV,Y3,Y1,L, tspan)
 
 %Program Integrating Plate Autooscillation Equations
 format long
@@ -7,6 +7,8 @@ global alfa  e V alfa10 m J s p  nap   k c r nn;
 
 m=mm;
 J=JJ;
+c=cc;
+V=VV;
 
 splast=0.32;
 a2=splast/8;

@@ -22,7 +22,7 @@ function varargout = FLUTTERSHY(varargin)
 
 % Edit the above text to modify the response to help FLUTTERSHY
 
-% Last Modified by GUIDE v2.5 21-Apr-2018 12:50:22
+% Last Modified by GUIDE v2.5 13-May-2018 15:14:21
 
 
 
@@ -99,3 +99,11 @@ function eq4p_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 feq4p();
+
+
+% --- Executes on button press in fep.
+function fep_Callback(hObject, eventdata, handles)
+% hObject    handle to fep (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
