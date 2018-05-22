@@ -1,4 +1,4 @@
-function [cc,VV, isStable] = stability(r, mm, JJ)
+function [cc,VV, isStable] = stability(r, mm, JJ, kk)
 
 % Программа интегрирующая уравнения автоколебаний пластинки  
 format long
@@ -8,6 +8,7 @@ figure('Visible', 'on', 'rend','painters','pos',[500 80 500 350],'Name', 'Set In
 
 m=mm;
 J=JJ;
+k=kk;
 
 splast=0.32;
 a22=splast/8;
@@ -15,7 +16,6 @@ aa=sqrt(a22);
 r0=1.27;
 g=9.8;
 %V=2;
-k=0.4;
 %c=0.4;
 b=1;
 nap=0.5*splast*r0;
