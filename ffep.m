@@ -1,9 +1,12 @@
 function ffep()
     f = figure('Visible', 'off', 'rend','painters','pos',[200 80 1000 450], 'Name', 'Equilibrium Points');
-            graph = axes('Units', 'Pixels', 'Position', [30,30,400,400]);
-            bifur = axes('Units', 'Pixels', 'Position', [480,30,400,400]);
+            %graph = axes('Units', 'Pixels', 'Position', [30,30,400,400]);
+            %bifur = axes('Units', 'Pixels', 'Position', [480,30,400,400]);
             startbtn = uicontrol('Style', 'pushbutton', 'String', 'Start', 'Callback', @startbtn_Callback, 'Position', [900,400,100,30]);
-            modebtn = uicontrol('Style', 'togglebutton','String', 'Manual', 'Position', [900,350,100,30]);
+            edit_r = uicontrol('Style', 'edit', 'String', '5', 'Position', [900,350,40,25]);
+            edit_c = uicontrol('Style', 'edit', 'String', '10', 'Position', [950,350,40,25]);
+            rstr = uicontrol('Style', 'text', 'String', 'R', 'Position', [900,300,40,25]);
+            cstr = uicontrol('Style', 'text', 'String', 'C', 'Position', [950,300,40,25]);
             
             f.Units='normalized';
 
@@ -26,20 +29,24 @@ function ffep()
     % eventdata  reserved - to be defined in a future version of MATLAB
     % handles    structure with handles and user data (see GUIDATA)
     %global args;
-    
-    if(modebtn.Value==0)
-        %jc = javacomponent(jObj.getComponent, [250,220,80,55], gcf);
-    end
         
     startbtn.Visible='off';
-    modebtn.Visible='off';
-    EQUILIBRIUM(1.5);
+    edit_r.Visible='off';
+    edit_c.Visible='off';
+    rstr.Visible='off';
+    cstr.Visible='off';
     
-    if(modebtn.Value==0)
-        %delete(jc);
-    end
+    rr=str2double(get(edit_r,'String'));
+    cc=str2double(get(edit_c,'String'));
+    if(rr==0 || isnan(rr)) r=5; edit_r.String=r; else r=rr; end
+    if(isnan(cc)) c=0; edit_c.String=c; else c=cc; end
+    EQUILIBRIUM(r, c);
+    
     startbtn.Visible='on';
-    modebtn.Visible='on';
+    edit_r.Visible='on';
+    edit_c.Visible='on';
+    rstr.Visible='on';
+    cstr.Visible='on';
     end 
 end
 
